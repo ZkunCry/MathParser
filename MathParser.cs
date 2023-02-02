@@ -4,7 +4,7 @@ namespace MathParser
 {
     class Program
     {
-        public static void Swap(string[] src, string operation, int index)
+        public static void Swap(ref string[] src, string operation, int index)
         {
             dynamic num = 0;
             double num1 = 0, num2 = 0;
@@ -32,19 +32,19 @@ namespace MathParser
             src[index + 1] = "";
             Copy(ref src, ref temp);
         }
-        public static void Calc(string[]op)
+        public static void Calc(ref string[]op)
         {
             
             for (int i = 0; i < op.Length; i++)
             {
                 if (op[i] == "*")
                 {
-                    Swap(op, "*", i);
+                    Swap(ref op, "*", i);
                     i = 0;
                 }
                 else if (op[i] == "/")
                 {
-                    Swap(op, "/", i);
+                    Swap(ref op, "/", i);
                     i = 0;
                 }
             }
@@ -52,13 +52,13 @@ namespace MathParser
             {
                 if (op[i] == "+")
                 {
-                    Swap(op, "+", i);
+                    Swap(ref op, "+", i);
                     i = 0;
                 }
                 else if (op[i] == "-")
                 {
                     i = 0;
-                    Swap(op, "-", i);
+                    Swap(ref op, "-", i);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace MathParser
                         op[j] = "";
                     }
                     op[j] = "";
-                    Calc(temp);
+                    Calc(ref temp);
                     op[tempj] = temp[0];
                     string[] temp2 = new string[op.Length];
                     Copy(ref op, ref temp2);
@@ -91,7 +91,7 @@ namespace MathParser
             string str = Console.ReadLine();
             string[] op = str.Split();
             CheckBrackets(ref op);
-            Calc(op);
+            Calc(ref op);
             foreach (var item in op)
                 Console.WriteLine(item);
             Console.ReadKey();
